@@ -68,8 +68,6 @@
 
 ;;=====================================================================
 ;; Read a Lexeme                       lexeme is an "accumulator"
-;;                                     Compare this with the C version
-;;=====================================================================
 
 (defun get-lex (state)
    (setf lexeme "")
@@ -91,15 +89,29 @@
 (defun map-lexeme (lexeme)
 (format t "Symbol: ~S ~%" lexeme)
    (list (cond
-         ((string=   lexeme "program")  'PROGRAM )
-         ((string=   lexeme "var"    )  'VAR     )
-
-;; etc,  *** TO BE DONE ***
-
-         ((string=   lexeme ""       )	'EOF     )
-         ((is-id     lexeme          )  'ID      )
-         ((is-number lexeme          )  'NUM     )
-         (t                             'UNKNOWN )
+         ((string=   lexeme "program" )  'PROGRAM  )
+	 ((string=   lexeme "input"   )  'INPUT	   )
+	 ((string=   lexeme "output"  )  'OUTPUT   )
+         ((string=   lexeme "var"     )  'VAR      )
+	 ((string=   lexeme "integer" )  'INTEGER  )
+         ((string=   lexeme "begin"   )  'BEGIN	   )
+	 ((string=   lexeme "end"     )  'END	   )
+	 ((string=   lexeme "boolean" )  'BOOLEAN  )
+	 ((string=   lexeme "real"    )  'INPUT    )
+	 ((string=   lexeme ":="      )  'ASSIGN   )
+	 ((string=   lexeme "("       )  'LPAR     )
+	 ((string=   lexeme ")"       )  'RPAR     )
+	 ((string=   lexeme "*"       )  'MULT     )
+	 ((string=   lexeme "+"       )  'ADD      )
+	 ((string=   lexeme "-"       )  'SUB      )
+	 ((string=   lexeme "."       )  'DOT      )
+	 ((string=   lexeme ","	      )  'COMMA    )
+         ((string=   lexeme ":"	      )  'COLON    )
+	 ((string=   lexeme ";"       )  'SCOLON   )
+         ((string=   lexeme ""        )  'EOF      )
+         ((is-id     lexeme           )  'ID       )
+         ((is-number lexeme           )  'NUM      )
+         (t                              'UNKNOWN  )
          )
     lexeme)
 )
