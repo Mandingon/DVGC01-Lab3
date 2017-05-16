@@ -121,13 +121,19 @@
 ;;=====================================================================
 
 (defun is-id (str)
-;; *** TO BE DONE ***
+ (if (and  (alpha-char-p (char str 0)) (every #'alphanumericp (subseq str 1)) )  
+ 	(RETURN-FROM is-id t)	
+ (RETURN-FROM is-id nil)
+ )
 )
 
+ 
 (defun is-number (str)
-;; *** TO BE DONE ***
+ (if (every #'numberp (read-from-string str))  
+ 	(RETURN-FROM is-number t)	
+ (RETURN-FROM is-number nil)
+ )
 )
-
 ;;=====================================================================
 ; THIS IS THE PARSER PART
 ;;=====================================================================
@@ -274,8 +280,6 @@
 ; <term>          --> <factor>   | <factor> * <term>
 ; <factor>        --> ( <expr> ) | <operand>
 ; <operand>       --> id | number
-;;=====================================================================
-
 ;; *** TO BE DONE ***
 
 ;;=====================================================================
