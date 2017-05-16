@@ -129,7 +129,7 @@
 
  
 (defun is-number (str)
- (if (every #'numberp (read-from-string str))  
+ (if (numberp (read-from-string str))  
  	(RETURN-FROM is-number t)	
  (RETURN-FROM is-number nil)
  )
