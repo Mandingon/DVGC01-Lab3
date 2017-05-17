@@ -401,6 +401,8 @@
 	((eq (first pstate-lookahead state) 'INTEGER) (match state 'INTEGER))
 	((eq (first pstate-lookahead state) 'BOOLEAN) (match state 'BOOLEAN))
 	((eq (first pstate-lookahead state) 'REAL)    (match state 'REAL   ))
+	)
+)
 ;;=====================================================================
 ; <program-header>
 ;;=====================================================================
