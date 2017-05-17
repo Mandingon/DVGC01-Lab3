@@ -192,7 +192,7 @@
 
 	
 (defun symtab-member (state id)
-	(member id '(state-symtab))
+	if((member id (state-symtab) :test #'equal) (t)(nil))
 )
 
 (defun symtab-display (state)
