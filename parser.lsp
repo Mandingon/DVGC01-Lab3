@@ -189,7 +189,7 @@
 )
 
 (defun symtab-member (state id)
-;; *** TO BE DONE ***
+	(member id '(state-symtab))
 )
 
 (defun symtab-display (state)
