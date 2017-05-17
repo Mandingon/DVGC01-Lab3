@@ -174,7 +174,8 @@
 ; lexeme - returns the lexeme from (token lexeme)(reader)
 ;;=====================================================================
 
-(defun token  (state) ;; *** TO BE DONE ***
+(defun token  (state)
+	
 )
 (defun lexeme (state) ;; *** TO BE DONE *** 
 )
@@ -401,7 +402,7 @@
 ; <program-header>
 ;;=====================================================================
 
-(defun progra-header(state)
+(defun program-header(state)
 	(match state 'PROGRAM)
 	(match state 'ID     )
 	(match state 'LPAR   )
