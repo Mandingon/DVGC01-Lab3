@@ -185,9 +185,12 @@
 ;;=====================================================================
 
 (defun symtab-add (state id)
-	(cons id (pstate-symtab state)) 
+	(if (not (symtab-member state id))
+		(setf (pstate-symtab state) (append (pstate symtab state) (list id)))
+	(semerr1 state) 
 )
 
+	
 (defun symtab-member (state id)
 	(member id '(state-symtab))
 )
@@ -386,6 +389,7 @@
 )
 
 (defun id-list(state)
+
 	(match state 'ID)
 	(if (eq (token state) 'COMMA)
 		(id-list-aux state)
