@@ -173,11 +173,11 @@
 ; token  - returns the token  from (token lexeme)(reader)
 ; lexeme - returns the lexeme from (token lexeme)(reader)
 ;;=====================================================================
-
-(defun token  (state)
-	
+(defun token  (state) 
+	(first (pstate-lookahead state)) 
 )
-(defun lexeme (state) ;; *** TO BE DONE *** 
+(defun lexeme (state)
+	(second (pstate-lookahead state)) 
 )
 
 ;;=====================================================================
