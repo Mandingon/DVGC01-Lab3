@@ -97,7 +97,7 @@
          ((string=   lexeme "begin"   )  'BEGIN	   )
 	 ((string=   lexeme "end"     )  'END	   )
 	 ((string=   lexeme "boolean" )  'BOOLEAN  )
-	 ((string=   lexeme "real"    )  'INPUT    )
+	 ((string=   lexeme "real"    )  'REAL	   )
 	 ((string=   lexeme ":="      )  'ASSIGN   )
 	 ((string=   lexeme "("       )  'LPAR     )
 	 ((string=   lexeme ")"       )  'RPAR     )
@@ -297,17 +297,67 @@
 ; <id-list>      --> id | id , <id-list>
 ; <type>         --> integer | real | boolean
 ;;=====================================================================
+;;=====================================================================
+;; VAR-PART AUX-FUNCTIONS
+;;=====================================================================
+(defun var-dec-list-aux(state)
+	(var-dec-list state)
+)
+
+(defun id-list-aux (state)
+	(match state 'COMMA)
+	(id-list state)
+)
+
+;;=====================================================================
 ;;VAR-PART
+;;=====================================================================
 
-;;Martin this is your space!!
+(defun var-part(state)
+	(match state 'VAR)
+	(var-dec-list state)
+)
 
+(defun var-dec-list(state)
+	(var-dec state)
+	(if (eq (first pstate-lookahead state) 'ID) 
+		(var-dec-list-aux state)
+	)
+)		
 
+(defun var-dec(state)
+	(id-list state)
+	(match state 'COLON)
+	(typ state)
+	(match state 'SCOLON)
+)
 
+(defun id-list(state)
+	(match state 'ID)
+	(if (eq (first pstate-lookahead state) 'COMMA)
+		(id-list-aux state)
+	)
+)
+
+(defun typ(state)
+	(cond 
+	((eq (first pstate-lookahead state) 'INTEGER) (match state 'INTEGER))
+	((eq (first pstate-lookahead state) 'BOOLEAN) (match state 'BOOLEAN))
+	((eq (first pstate-lookahead state) 'REAL)    (match state 'REAL   ))
 ;;=====================================================================
 ; <program-header>
 ;;=====================================================================
 
-;; *** TO BE DONE ***
+(defun progra-header(state)
+	(match state 'PROGRAM)
+	(match state 'ID     )
+	(match state 'LPAR   )
+	(match state 'INPUT  )
+	(match state 'COMMA  )
+	(match state 'OUTPUT )
+	(match state 'RPAR   )
+	(match state 'SCOLON )
+)
 
 ;;=====================================================================
 ; <program> --> <program-header><var-part><stat-part>
