@@ -318,6 +318,7 @@
 (defun assign-stat (state)
 	(match state 'ID)
 	(match state 'ASSIGN)
+	(expr state)
 )
 (defun expr (state)
 	(term state)
