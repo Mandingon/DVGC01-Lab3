@@ -280,16 +280,73 @@
 ; <term>          --> <factor>   | <factor> * <term>
 ; <factor>        --> ( <expr> ) | <operand>
 ; <operand>       --> id | number
-;; *** TO BE DONE ***
 ;;=====================================================================
-;;Stat Part
+;;Stat Part Auxiliary Functions
+;;=====================================================================
+(defun stat-list-aux (state)
+	(match state 'SCOLON)
+	(stat-list state)
+)
+(defun expr-aux (state)
+	(match state 'ADD)
+	(expr state)
+)
+(defun term-aux (state)
+	(match state 'MULT)
+	(term state)
+)
+(defun factor-aux (state)
+	(match 'LPAR)
+	(expr state)
+	(match 'RPAR)
+)
 
-(defun stat-part(state)
+;;=====================================================================
+;;Stat Part Functions
+;;=====================================================================
+(defun stat-part (state)
 	(match state 'BEGIN)
 	(stat-list state)
 	(match state 'END)
 	(match state 'DOT)
 )
+(defun stat-list (state)
+	(stat state)
+	(if(eq (first pstate-lookahead state) 'SCOLON)
+		(stat-list-aux state)
+	)
+)
+(defun stat (state)
+	(assign-stat state)
+)
+(defun assign-stat (state)
+	(match state 'ID)
+	(match state 'ASSIGN)
+)
+(defun expr (state)
+	(term state)
+	(if(eq (first pstate-lookahead state) 'ADD)
+		(expr-aux state)
+	)
+)
+(defun term (state)
+	(factor state)
+	(if(eq (first pstate-lookahead state) 'MULT)
+		(term-aux state)
+	)
+)
+(defun factor (state)
+	(if(eq (first pstate-lookahead state) 'LPAR)
+		(factor-aux state)
+	(operand state)
+	)
+)
+(defun operand (state)
+	(if(eq (first pstate-lookahead state) 'ID)
+		(match state 'ID)
+	(match state 'NUM)
+	)
+) 
 ;;=====================================================================
 ; <var-part>     --> var <var-dec-list>
 ; <var-dec-list> --> <var-dec> | <var-dec><var-dec-list>
