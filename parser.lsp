@@ -185,7 +185,7 @@
 ;;=====================================================================
 
 (defun symtab-add (state id)
-;; *** TO BE DONE ***
+	(cons id (pstate-symtab state)) 
 )
 
 (defun symtab-member (state id)
