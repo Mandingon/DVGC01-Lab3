@@ -129,7 +129,7 @@
 
  
 (defun is-number (str)
- (if (every #'numberp (read-from-string str))  
+ (if (numberp (read-from-string str))  
  	(RETURN-FROM is-number t)	
  (RETURN-FROM is-number nil)
  )
@@ -281,7 +281,15 @@
 ; <factor>        --> ( <expr> ) | <operand>
 ; <operand>       --> id | number
 ;; *** TO BE DONE ***
+;;=====================================================================
+;;Stat Part
 
+(defun stat-part(state)
+	(match state 'BEGIN)
+	(stat-list state)
+	(match state 'END)
+	(match state 'DOT)
+)
 ;;=====================================================================
 ; <var-part>     --> var <var-dec-list>
 ; <var-dec-list> --> <var-dec> | <var-dec><var-dec-list>
@@ -289,8 +297,11 @@
 ; <id-list>      --> id | id , <id-list>
 ; <type>         --> integer | real | boolean
 ;;=====================================================================
+;;VAR-PART
 
-;; *** TO BE DONE ***
+;;Martin this is your space!!
+
+
 
 ;;=====================================================================
 ; <program-header>
