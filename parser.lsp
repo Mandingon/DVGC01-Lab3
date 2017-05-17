@@ -188,8 +188,8 @@
 	(if (not (symtab-member state id))
 		(setf (pstate-symtab state) (append (pstate symtab state) (list id)))
 	(semerr1 state) 
+	)
 )
-
 	
 (defun symtab-member (state id)
 	if((member id (state-symtab) :test #'equal) (t)(nil))
@@ -389,7 +389,7 @@
 )
 
 (defun id-list(state)
-
+	(symtab-add state (lexeme state))
 	(match state 'ID)
 	(if (eq (token state) 'COMMA)
 		(id-list-aux state)
