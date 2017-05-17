@@ -186,13 +186,13 @@
 
 (defun symtab-add (state id)
 	(if (not (symtab-member state id))
-		(setf (pstate-symtab state) (append (pstate symtab state) (list id)))
+		(setf (pstate-symtab state) (append (pstate-symtab state) (list id)))
 	(semerr1 state) 
 	)
 )
 	
 (defun symtab-member (state id)
-	if((member id (state-symtab) :test #'equal) (t)(nil))
+	(if(member id (pstate-symtab state) :test #'equal) (t))
 )
 
 (defun symtab-display (state)
