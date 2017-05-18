@@ -306,10 +306,8 @@
 	(stat-list state)
 	(match state 'END)
 	(match state 'DOT)
-	(if(not ( eq (token state) 'DOT))
-		(semerr3 state)
-	)
 )
+
 (defun stat-list (state)
 	(stat state)
 	(if(eq (token state) 'SCOLON)
@@ -442,11 +440,12 @@
 ;;=====================================================================
 (defun check-end-aux (state)
 	(semerr3 state)
+	(match state (token state))
 	(check-end state)
 )
 
 (defun check-end (state)
-	(if(and (not (eq (token state) 'EOF)) (match state (token state)))
+	(if (not (eq (token state) 'EOF))
 			(check-end-aux state)		
 	)
 )
