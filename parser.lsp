@@ -293,9 +293,9 @@
 	(term state)
 )
 (defun factor-aux (state)
-	(match 'LPAR)
+	(match state 'LPAR)
 	(expr state)
-	(match 'RPAR)
+	(match state 'RPAR)
 )
 
 ;;=====================================================================
@@ -439,7 +439,7 @@
 ;;=====================================================================
 
 (defun check-end (state)
-	(if(and (not (eq (token state) 'EOF)) (match (token state)))
+	(if(and (not (eq (token state) 'EOF)) (match state (token state)))
 		(semerr3 state)
 	)
 )
