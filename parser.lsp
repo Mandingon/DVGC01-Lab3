@@ -317,6 +317,10 @@
 	(assign-stat state)
 )
 (defun assign-stat (state)
+	(if (and (not (symtab-member state (lexeme state)) ) (eq (token state) 'ID)) 
+		(semerr2 state) 
+	)
+
 	(match state 'ID)
 	(match state 'ASSIGN)
 	(expr state)
@@ -340,9 +344,12 @@
 	)
 )
 (defun operand (state)
-	(if(eq (token state) 'ID)
-		(match state 'ID)
-	(match state 'NUM)
+	(if  (and (eq (token state) 'ID) (not (symtab-member state (lexeme state)) ) ) (semerr2 state)) 
+	
+	(cond 
+	((eq (token state) 'ID ) (match state 'ID ))	
+	((eq (token state) 'NUM) (match state 'NUM))
+	(t 			    (synerr3 state))
 	)
 ) 
 ;;=====================================================================
@@ -388,7 +395,7 @@
 )
 
 (defun id-list(state)
-	(symtab-add state (lexeme state))
+	(if (eq (token state) 'ID) (symtab-add state (lexeme state)) )
 	(match state 'ID)
 	(if (eq (token state) 'COMMA)
 		(id-list-aux state)
@@ -400,6 +407,7 @@
 	((eq (token state) 'INTEGER) (match state 'INTEGER))
 	((eq (token state) 'BOOLEAN) (match state 'BOOLEAN))
 	((eq (token state) 'REAL)    (match state 'REAL   ))
+	(t		   		    (synerr2 state)) 
 	)
 )
 ;;=====================================================================
