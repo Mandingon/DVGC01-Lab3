@@ -1,0 +1,2 @@
+(load :lab3)
+(parse-all)
