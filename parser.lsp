@@ -346,7 +346,7 @@
 (defun operand (state)
 	(if  (and (eq (token state) 'ID) (not (symtab-member state (lexeme state)) ) ) (semerr2 state)) 
 	
-	(cond 
+	(cond
 	((eq (token state) 'ID ) (match state 'ID ))	
 	((eq (token state) 'NUM) (match state 'NUM))
 	(t 			    (synerr3 state))
