@@ -293,9 +293,9 @@
 	(term state)
 )
 (defun factor-aux (state)
-	(match 'LPAR)
+	(match state 'LPAR)
 	(expr state)
-	(match 'RPAR)
+	(match state 'RPAR)
 )
 
 ;;=====================================================================
@@ -437,10 +437,15 @@
 ;;=====================================================================
 ; THE PARSER - parse a file
 ;;=====================================================================
+(defun check-end-aux (state)
+	(semerr3 state)
+	(check-end state)
+)
 
 (defun check-end (state)
-	(if(and (not (eq (token state) 'EOF)) (match (token state)))
-		(semerr3 state)
+	(if(and (not (eq (token state) 'EOF)) (match state (token state)))
+			(check-end-aux state)
+		
 	)
 )
 
@@ -472,6 +477,7 @@
 ;;=====================================================================
 
 (defun parse-all ()
+	(dribble "testall.out")
 	(mapcar #'parse '(
 		"testfiles/testa.pas" "testfiles/testb.pas" "testfiles/testc.pas"
 		"testfiles/testd.pas" "testfiles/teste.pas" "testfiles/testf.pas"
@@ -493,6 +499,7 @@
 		"testfiles/sem1.pas" "testfiles/sem2.pas" "testfiles/sem3.pas"
 		"testfiles/sem4.pas" "testfiles/sem5.pas")
 	)
+	(dribble)
 )
 ;;=====================================================================
 ; THE PARSER - test all files
