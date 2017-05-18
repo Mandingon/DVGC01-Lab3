@@ -307,7 +307,7 @@
 	(match state 'END)
 	(if( eq (token state) 'DOT)
 		(match state 'DOT)
-	(semerr3)
+	(semerr3 state)
 	)
 )
 (defun stat-list (state)
