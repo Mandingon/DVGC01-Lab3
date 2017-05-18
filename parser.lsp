@@ -192,7 +192,7 @@
 )
 	
 (defun symtab-member (state id)
-	(if(member id (pstate-symtab state) :test #'equal) (t))
+	(if(member id (pstate-symtab state) :test #'equal) (RETURN-FROM symtab-member t))
 )
 
 (defun symtab-display (state)
@@ -439,7 +439,7 @@
 ;;=====================================================================
 
 (defun check-end (state)
-	(if(match (token state))
+	(if(and (not (eq (token state) 'EOF)) (match (token state)))
 		(semerr3 state)
 	)
 )
